@@ -75,20 +75,17 @@ export default function CalendarPage() {
       if (!m.has(normalized.date)) m.set(normalized.date, []);
       m.get(normalized.date)!.push(normalized);
     }
-    for (const [k, arr] of Array.from(m)) {
-      m.set(k, arr.slice(0, 5));
-    }
+    for (const [k, arr] of m) m.set(k, arr.slice(0, 5));
     return m;
-  }, [items]); 
+  }, [items]); // ใส่ items ตรงนี้เพื่อให้ข้อมูลขึ้นหลังรีเฟรช
 
   const byDate = useMemo(() => {
     if (filter === "all") return byDateAll;
     const m = new Map<string, CalendarItem[]>();
-    for (const [date, arr] of Array.from(byDateAll.entries())) {
+    for (const [date, arr] of byDateAll.entries()) {
       const filtered = arr.filter((it) => matchArtist(it, filter));
       if (filtered.length > 0) m.set(date, filtered);
     }
-
     return m;
   }, [byDateAll, filter]);
 
@@ -220,9 +217,7 @@ export default function CalendarPage() {
               height={200}
               className={"mx-auto"}
             />
-            <label className="text-lg">
-              ไม่มีงาน มีแต่ความน่ารักของดอลล่าห์
-            </label>
+            <label className="text-lg">ไม่มีงาน มีแต่ความน่ารักของดอลล่าห์</label>
           </div>
         ) : (
           <div className="space-y-2 mb-6">
