@@ -7,9 +7,10 @@ import { CalendarItem } from "@/types/calendar";
 import SocialLinks from "./SocialLinks";
 import { withBasePath } from "@/lib/basePath";
 
+const prefix = process.env.NODE_ENV === "production" ? "/my-recap-ejj" : "";
 const ARTIST_ICON: Record<string, string> = {
-  june: "/artist/june.png",
-  enjoy: "/artist/enjoy.png",
+  june: `${prefix}/artist/june.png`,
+  enjoy: `${prefix}/artist/enjoy.png`,
 };
 
 type ArtistFilter = "all" | "june" | "enjoy";
@@ -215,7 +216,7 @@ export default function CalendarPage() {
         ) : mobileDays.length === 0 ? (
           <div className="rounded-xl border border-pinkLight bg-white p-6 text-sm text-blackSoft/80 shadow-soft text-center">
             <Image
-              src={"/nodata.png"}
+              src={`${prefix}/nodata.png`}
               alt="nodata"
               width={200}
               height={200}
