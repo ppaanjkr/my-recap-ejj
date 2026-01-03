@@ -3,17 +3,16 @@
 
 // export default nextConfig;
 /** @type {import('next').NextConfig} */
-const repo = "my-recap-ejj";
+const isProd = process.env.NODE_ENV === "production";
 
 const nextConfig = {
   output: "export",
   images: {
     unoptimized: true,
   },
-  basePath: `/${repo}`,
-  assetPrefix: `/${repo}/`,
+  basePath: isProd ? "/my-recap-ejj" : "",
+  assetPrefix: isProd ? "/my-recap-ejj/" : "",
 };
 
 export default nextConfig;
-
 
