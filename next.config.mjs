@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-const repo = "my-recapp-ejj"; 
+const repo = "my-recap-ejj"; 
 
 const nextConfig = {
   output: "export",
