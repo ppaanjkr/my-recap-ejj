@@ -7,10 +7,10 @@ import { CalendarItem } from "@/types/calendar";
 import SocialLinks from "./SocialLinks";
 import { withBasePath } from "@/lib/basePath";
 
-const prefix = process.env.NODE_ENV === "production" ? "/my-recap-ejj" : "";
+// const prefix = process.env.NODE_ENV === "production" ? "/my-recap-ejj" : "";
 const ARTIST_ICON: Record<string, string> = {
-  june: `${prefix}/artist/june.png`,
-  enjoy: `${prefix}/artist/enjoy.png`,
+  june: `/artist/june.png`,
+  enjoy: `/artist/enjoy.png`,
 };
 
 type ArtistFilter = "all" | "june" | "enjoy";
@@ -130,7 +130,7 @@ export default function CalendarPage() {
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
             <div className="inline-flex items-center gap-2 rounded-full bg-pinkSoft px-3 py-1 text-sm font-semibold text-blackSoft">
-              🎀 EnjoyJune Scheduler Test
+              🎀 EnjoyJune Scheduler
             </div>
             <h1 className="mt-3 text-xl font-extrabold tracking-tight text-blackSoft">
               แพลนงานเดือน {monthLabelTH(cursor)}
@@ -216,7 +216,7 @@ export default function CalendarPage() {
         ) : mobileDays.length === 0 ? (
           <div className="rounded-xl border border-pinkLight bg-white p-6 text-sm text-blackSoft/80 shadow-soft text-center">
             <Image
-              src={`${prefix}/nodata.png`}
+              src={`/nodata.png`}
               alt="nodata"
               width={200}
               height={200}
