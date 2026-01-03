@@ -51,6 +51,7 @@ function formatThaiFull(dateStr: string) {
 
 export default function CalendarPage() {
   const { items, loading, error } = useSheetEvents();
+  console.log("CalendarPage items:", items, loading, error);
 
   const [cursor, setCursor] = useState(() => {
     const now = new Date();
@@ -62,7 +63,6 @@ export default function CalendarPage() {
 
   const exportRef = useRef<HTMLDivElement>(null);
 
-  // ✅ จุดแก้ไขสำคัญ: เพิ่ม [items] เพื่อให้รีเฟรชแล้วข้อมูลที่โหลดมาทีหลังถูกนำมาคำนวณ
   const byDateAll = useMemo(() => {
     const m = new Map<string, CalendarItem[]>();
     for (const it of items) {
@@ -80,7 +80,7 @@ export default function CalendarPage() {
     }
 
     return m;
-  }, [items]); // ใส่ items ตรงนี้เพื่อให้ข้อมูลขึ้นหลังรีเฟรช
+  }, [items]); 
 
   const byDate = useMemo(() => {
     if (filter === "all") return byDateAll;
@@ -331,7 +331,6 @@ export default function CalendarPage() {
                         <button
                           key={it.id}
                           onClick={() => setSelected(it)}
-                          // className="w-full overflow-hidden rounded-lg border border-pinkSoft bg-white text-left shadow-sm grid grid-cols-2 h-[65px]"
                           className="w-full overflow-hidden rounded-lg border border-pinkSoft bg-white text-left shadow-sm transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md grid grid-cols-2 h-[65px]"
                         >
                           <div className="relative w-full bg-pinkSoft">
