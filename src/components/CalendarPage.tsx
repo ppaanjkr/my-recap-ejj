@@ -128,7 +128,7 @@ export default function CalendarPage() {
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
             <div className="inline-flex items-center gap-2 rounded-full bg-pinkSoft px-3 py-1 text-sm font-semibold text-blackSoft">
-              🎀 EnjoyJune Scheduler
+              🎀 EnjoyJune Scheduler Test
             </div>
             <h1 className="mt-3 text-xl font-extrabold tracking-tight text-blackSoft">
               แพลนงานเดือน {monthLabelTH(cursor)}
