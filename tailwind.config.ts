@@ -13,6 +13,20 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      fontFamily: {
+        kanit: ["var(--font-kanit)"],
+      },
+      colors: {
+        pinkSoft: "#FCDCEC",
+        pinkLight: "#F9BFD3",
+        pinkMain: "#F68CB7",
+        pinkBg: "#FDD6E1",
+        blackSoft: "#474747",
+        graySoft: "#AAACBE"
+      },
+      boxShadow: {
+        soft: "0 10px 30px rgba(0,0,0,0.08)",
+      },
     },
   },
   plugins: [],
