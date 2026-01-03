@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useSheetEvents } from "@/hooks/useSheetEvents";
 import { CalendarItem } from "@/types/calendar";
 import SocialLinks from "./SocialLinks";
+import { withBasePath } from "@/lib/basePath";
 
 const ARTIST_ICON: Record<string, string> = {
   june: "/artist/june.png",
@@ -158,7 +159,7 @@ export default function CalendarPage() {
                   ].join(" ")}
                 >
                   <Image
-                    src={ARTIST_ICON.june}
+                    src={withBasePath(ARTIST_ICON.june)}
                     alt="june"
                     width={16}
                     height={16}
@@ -175,7 +176,7 @@ export default function CalendarPage() {
                   ].join(" ")}
                 >
                   <Image
-                    src={ARTIST_ICON.enjoy}
+                    src={withBasePath(ARTIST_ICON.enjoy)}
                     alt="enjoy"
                     width={16}
                     height={16}
