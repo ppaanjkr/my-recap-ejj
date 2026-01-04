@@ -9,7 +9,7 @@ const kanit = Kanit({
 });
 
 export const metadata: Metadata = {
-  title: "My Recap",
+  title: "All for EnjoyJune",
   description: "All recap of EnjoyJune",
 };
 

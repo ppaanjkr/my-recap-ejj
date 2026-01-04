@@ -133,7 +133,7 @@ export default function CalendarPage() {
               🎀 EnjoyJune Scheduler
             </div>
             <h1 className="mt-3 text-xl font-extrabold tracking-tight text-blackSoft">
-              แพลนงานเดือน {monthLabelTH(cursor)}
+              ความสุขเดือน {monthLabelTH(cursor)}
             </h1>
           </div>
 
@@ -216,7 +216,7 @@ export default function CalendarPage() {
         ) : mobileDays.length === 0 ? (
           <div className="rounded-xl border border-pinkLight bg-white p-6 text-sm text-blackSoft/80 shadow-soft text-center">
             <Image
-              src={`/nodata.png`}
+              src={withBasePath("/nodata.png")}
               alt="nodata"
               width={200}
               height={200}
@@ -261,7 +261,7 @@ export default function CalendarPage() {
                             .map((a) => (
                               <img
                                 key={a}
-                                src={ARTIST_ICON[a]}
+                                src={withBasePath(ARTIST_ICON[a])}
                                 className="h-7 w-7 rounded-md border border-white bg-white/80"
                               />
                             ))}
@@ -347,7 +347,7 @@ export default function CalendarPage() {
                                 .map((a) => (
                                   <img
                                     key={a}
-                                    src={ARTIST_ICON[a]}
+                                    src={withBasePath(ARTIST_ICON[a])}
                                     className="h-4 w-4 rounded-md border border-white bg-white/80"
                                   />
                                 ))}
@@ -410,6 +410,11 @@ export default function CalendarPage() {
                 >
                   {selected.title}
                 </div>
+                <div
+                  className={`text-sm text-graySoft`}
+                >
+                  {formatThaiFull(selected.date)}
+                </div>
               </div>
               {(selected.artists?.length ?? 0) > 0 && (
                 <div className="mt-4 flex flex-wrap gap-2">
@@ -420,7 +425,7 @@ export default function CalendarPage() {
                     >
                       {ARTIST_ICON[a] && (
                         <img
-                          src={ARTIST_ICON[a]}
+                          src={withBasePath(ARTIST_ICON[a])}
                           className="h-5 w-5 rounded-lg"
                           alt={a}
                         />

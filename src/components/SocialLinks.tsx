@@ -1,3 +1,5 @@
+import { withBasePath } from "@/lib/basePath";
+
 type Props = {
   urlYoutube?: string;
   urlFacebook?: string;
@@ -44,7 +46,7 @@ export default function SocialLinks({
             className={ICON_CLASS}
             title="YouTube"
           >
-            <img src="/social/youtube.png" alt="YouTube" className={IMG_CLASS} />
+            <img src={withBasePath("/social/youtube.png")} alt="YouTube" className={IMG_CLASS} />
           </a>
         )}
 
@@ -56,7 +58,7 @@ export default function SocialLinks({
             className={ICON_CLASS}
             title="Facebook"
           >
-            <img src="/social/facebook.png" alt="Facebook" className={IMG_CLASS} />
+            <img src={withBasePath("/social/facebook.png")} alt="Facebook" className={IMG_CLASS} />
           </a>
         )}
 
@@ -69,7 +71,7 @@ export default function SocialLinks({
             title="Instagram"
           >
             <img
-              src="/social/instagram.png"
+              src={withBasePath("/social/instagram.png")}
               alt="Instagram"
               className={IMG_CLASS}
             />
@@ -84,7 +86,7 @@ export default function SocialLinks({
             className={ICON_CLASS}
             title="Twitter / X"
           >
-            <img src="/social/twitter.png" alt="Twitter" className={IMG_CLASS} />
+            <img src={withBasePath("/social/twitter.png")} alt="Twitter" className={IMG_CLASS} />
           </a>
         )}
 
@@ -96,7 +98,7 @@ export default function SocialLinks({
             className={ICON_CLASS}
             title="TikTok"
           >
-            <img src="/social/tiktok.png" alt="TikTok" className={IMG_CLASS} />
+            <img src={withBasePath("/social/tiktok.png")} alt="TikTok" className={IMG_CLASS} />
           </a>
         )}
       </div>
