@@ -52,7 +52,7 @@ function formatThaiFull(dateStr: string) {
 
 export default function CalendarPage() {
   const { items, loading, error } = useSheetEvents();
-  console.log("CalendarPage items:", items, loading, error);
+  // console.log("CalendarPage items:", items, loading, error);
 
   const [cursor, setCursor] = useState(() => {
     const now = new Date();
@@ -81,7 +81,7 @@ export default function CalendarPage() {
     }
 
     return m;
-  }, [items]); 
+  }, [items]);
 
   const byDate = useMemo(() => {
     if (filter === "all") return byDateAll;
@@ -133,7 +133,7 @@ export default function CalendarPage() {
               🎀 EnjoyJune Scheduler
             </div>
             <h1 className="mt-3 text-xl font-extrabold tracking-tight text-blackSoft">
-              ความสุขเดือน {monthLabelTH(cursor)}
+              เดือน {monthLabelTH(cursor)}
             </h1>
           </div>
 
@@ -379,83 +379,120 @@ export default function CalendarPage() {
           onClick={() => setSelected(null)}
         >
           <div
-            className="w-full max-w-lg overflow-hidden rounded-lg bg-white shadow-soft"
+            className="w-full max-w-lg overflow-hidden rounded-3xl bg-white shadow-soft max-h-[90vh] flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="relative h-56 bg-pinkSoft">
-              {coverOf(selected) && (
+            <div className="relative h-56 shrink-0 bg-pinkSoft">
+              {coverOf(selected) ? (
                 <img
                   src={coverOf(selected)}
+                  alt={selected.title}
                   className="h-full w-full object-cover"
                 />
-              )}
+              ) : null}
+
+              {/* close modal */}
               <button
                 onClick={() => setSelected(null)}
-                className="absolute right-3 top-3 rounded-full bg-white/90 px-3 py-2 font-extrabold text-blackSoft"
+                className="absolute right-3 top-3 rounded-full bg-white/90 px-3 py-2 text-sm font-extrabold text-blackSoft hover:bg-white"
               >
                 ✕
               </button>
             </div>
-            <div className="px-5 pb-5 pt-3">
+
+            <div className="px-5 pb-5 pt-3 overflow-y-auto flex-1 min-h-0">
+              {/* title */}
               <div className="relative">
                 {selected.meeting && (
-                  <span className="absolute right-0 top-0 rounded-full border border-pinkLight bg-pinkSoft/70 px-3 py-1 text-xs">
+                  <span className="absolute right-0 top-0 rounded-full border border-pinkLight bg-pinkSoft/70 px-3 py-1 text-xs text-blackSoft">
                     รวมพล
                   </span>
                 )}
-                <div
-                  className={`text-lg text-blackSoft ${
-                    selected.meeting ? "pt-8 font-extrabold" : "font-normal"
-                  }`}
-                >
-                  {selected.title}
-                </div>
-                <div
-                  className={`text-sm text-graySoft`}
-                >
-                  {formatThaiFull(selected.date)}
+                <div className={selected.meeting ? "pt-8" : ""}>
+                  <div className="text-xl font-extrabold text-blackSoft">
+                    {selected.title}
+                  </div>
                 </div>
               </div>
-              {(selected.artists?.length ?? 0) > 0 && (
+
+              {/* artists */}
+              {selected.artists?.length ? (
                 <div className="mt-4 flex flex-wrap gap-2">
-                  {(selected.artists || []).map((a) => (
+                  {selected.artists.map((a) => (
                     <span
                       key={a}
-                      className="inline-flex items-center gap-2 rounded-full border border-pinkLight bg-pinkSoft/40 px-3 py-1 text-sm font-semibold"
+                      className="inline-flex items-center gap-2 rounded-full border border-pinkLight bg-pinkSoft/40 px-3 py-1 text-sm font-semibold text-blackSoft"
                     >
-                      {ARTIST_ICON[a] && (
+                      {ARTIST_ICON[a] ? (
                         <img
-                          src={withBasePath(ARTIST_ICON[a])}
-                          className="h-5 w-5 rounded-lg"
+                          src={ARTIST_ICON[a]}
                           alt={a}
+                          className="h-5 w-5 rounded-lg"
                         />
-                      )}
+                      ) : null}
                       {a.toUpperCase()}
                     </span>
                   ))}
                 </div>
-              )}
-              <div className="mt-4 text-blackSoft/80">
-                {selected.keyword && (
-                  <div className="mb-1">{selected.keyword}</div>
-                )}
-                {selected.hashtag?.map((tag) => (
-                  <div key={tag}>{tag}</div>
-                ))}
+              ) : null}
+
+              {/* keyword + hashtag */}
+              <div className="mt-4">
+                {selected.keyword ? (
+                  <label className="flex flex-col text-blackSoft/80">
+                    {selected.keyword}
+                  </label>
+                ) : null}
+
+                {selected.hashtag?.length ? (
+                  <div className="mt-2 flex flex-col text-blackSoft/80">
+                    {selected.hashtag.map((tag) => (
+                      <span key={tag}>{tag}</span>
+                    ))}
+                  </div>
+                ) : null}
               </div>
+
+              {/* thumbs */}
               {thumbsOf(selected).length > 0 && (
-                <div className="mt-5 grid grid-cols-12 gap-2">
-                  {thumbsOf(selected).map((src) => (
-                    <div
-                      key={src}
-                      className="col-span-6 md:col-span-3 aspect-[4/3] overflow-hidden rounded-2xl border border-pinkSoft"
-                    >
-                      <img src={src} className="h-full w-full object-cover" />
-                    </div>
-                  ))}
+                <div className="mt-5">
+                  <div className="mb-2 text-sm font-extrabold text-blackSoft">
+                    รูปเพิ่มเติม
+                  </div>
+
+                  <div className="grid grid-cols-12 gap-2">
+                    {thumbsOf(selected).map((src) => (
+                      <div
+                        key={src}
+                        className="col-span-6 md:col-span-3 aspect-[4/3] overflow-hidden rounded-2xl border border-pinkSoft bg-pinkSoft"
+                      >
+                        <img
+                          src={src}
+                          alt="thumb"
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
-              <SocialLinks {...selected} />
+
+              {/* Social links */}
+              {(selected.urlYoutube ||
+                selected.urlFacebook ||
+                selected.urlInstagram ||
+                selected.urlTwitter ||
+                selected.urlTiktok) && (
+                <div className="mt-5">
+                  <SocialLinks
+                    urlYoutube={selected.urlYoutube}
+                    urlFacebook={selected.urlFacebook}
+                    urlInstagram={selected.urlInstagram}
+                    urlTwitter={selected.urlTwitter}
+                    urlTiktok={selected.urlTiktok}
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>
