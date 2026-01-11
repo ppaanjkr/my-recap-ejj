@@ -15,7 +15,7 @@ const ICON_CLASS =
 
 const IMG_CLASS = "h-5 w-5 object-contain";
 
-export default function SocialLinks({
+export default function ProfileSocial({
   urlYoutube,
   urlFacebook,
   urlInstagram,
@@ -35,12 +35,8 @@ export default function SocialLinks({
   }
 
   return (
-    <div className="mt-6">
-      <div className="mb-2 text-sm font-extrabold text-blackSoft">
-        เชิญส่อง
-      </div>
-
-      <div className="flex flex-wrap gap-3">
+    <div className="mt-2">
+      <div className="flex flex-wrap gap-3 justify-center md:justify-start">
         {urlYoutube && (
           <a
             href={urlYoutube}
