@@ -175,7 +175,7 @@ export default function AboutSection({ data }: Props) {
                   <div className="h-11 w-11 rounded-full border border-pinkLight bg-pinkSoft/25 overflow-hidden flex items-center justify-center">
                     {b.Image ? (
                       <img
-                        src={b.Image}
+                        src={withBasePath(b.Image)}
                         alt={b.name ?? "bestie"}
                         className="h-full w-full object-cover"
                       />
