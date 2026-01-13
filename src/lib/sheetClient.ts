@@ -1,7 +1,14 @@
 import type { CalendarItem } from "@/types/calendar";
+import { MusicItem } from "@/types/music";
 
 // const SHEET_TSV_URL = process.env.NEXT_PUBLIC_SHEET_TSV_URL ?? ""; 
-const SHEET_TSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQvOnidB4yVNl_TOOzjwcW_yu845NxyVM1w5xC_u-4hDvZ9t30q7aqznADzGxy_l2UJx6HLoU9z3_Yu/pub?gid=0&single=true&output=tsv";
+// const SHEET_TSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQvOnidB4yVNl_TOOzjwcW_yu845NxyVM1w5xC_u-4hDvZ9t30q7aqznADzGxy_l2UJx6HLoU9z3_Yu/pub?gid=0&single=true&output=tsv";
+const SHEET_TSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQvOnidB4yVNl_TOOzjwcW_yu845NxyVM1w5xC_u-4hDvZ9t30q7aqznADzGxy_l2UJx6HLoU9z3_Yu/pub";
+const SHEETS = {
+  events: `${SHEET_TSV_URL}?gid=0&single=true&output=tsv`,
+  musics: `${SHEET_TSV_URL}?gid=1443708484&single=true&output=tsv`,
+  works: `${SHEET_TSV_URL}?gid=433014224&single=true&output=tsv`,
+};
 
 // get id from drive to thumbnail url
 function getGoogleDriveThumbnail(url: string) {
@@ -27,10 +34,23 @@ function toBool(v: string) {
   return s === "true" || s === "1" || s === "yes";
 }
 
+function splitArtists(v: string) {
+  return (v ?? "")
+    .split(",")
+    .map(s => s.trim().toLowerCase())
+    .filter(Boolean);
+}
+
+function matchArtist(cell: string, artist: string) {
+  if (!artist) return true;
+  return splitArtists(cell).includes(artist.toLowerCase());
+}
+
+
 export async function fetchEventsFromSheetTSV(): Promise<CalendarItem[]> {
   if (!SHEET_TSV_URL) throw new Error("Missing NEXT_PUBLIC_SHEET_TSV_URL");
 
-  const res = await fetch(SHEET_TSV_URL, { cache: "no-store" });
+  const res = await fetch(SHEETS.events, { cache: "no-store" });
   if (!res.ok) throw new Error(`Fetch failed: ${res.status}`);
 
   const tsv = await res.text();
@@ -73,4 +93,46 @@ export async function fetchEventsFromSheetTSV(): Promise<CalendarItem[]> {
     });
   }
   return items;
+}
+
+export async function fetchMusicsFromSheetTSV(name: string) {
+  if (!SHEET_TSV_URL) throw new Error("Missing NEXT_PUBLIC_SHEET_TSV_URL");
+
+  const res = await fetch(SHEETS.musics, { cache: "no-store" });
+  if (!res.ok) throw new Error(`Fetch failed: ${res.status}`);
+  const tsv = await res.text();
+  const lines = tsv.split(/\r?\n/).filter((l) => l.trim().length > 0);
+  const header = lines[0].split("\t").map((h) => h.trim());
+  const idx = (name: string) => header.indexOf(name);
+  const dayCounter = new Map<string, number>();
+  const items: MusicItem[] = [];
+
+  for (let i = 1; i < lines.length; i++) {
+    const cols = lines[i].split("\t");
+    const get = (name: string) => {
+      const j = idx(name);
+      return j >= 0 ? (cols[j] ?? "").trim() : "";
+    };
+    const date = get("date");
+    const title = get("title");
+    const count = dayCounter.get(date) ?? 0;
+    if (!date || !title) continue;
+
+    const id = `${date}-${String(count + 1).padStart(2, "0")}`;
+
+    items.push({
+      id,
+      date,
+      type: get("type"),
+      title,
+      artist: get("artists"),
+      thumbnail: get("coverImage"),
+      platform: get("platform"),
+      link: get("url"),
+    });
+  }
+  const filtered = items
+    .filter((item) => matchArtist(item.artist ?? "", name))
+    .sort((a, b) => (b.date ?? "").localeCompare(a.date ?? ""));
+  return filtered;
 }

@@ -168,7 +168,7 @@ export default function AboutSection({ data }: Props) {
             {data.Besties?.map((b) => (
               <div
                 key={b.index}
-                className="col-span-12 md:col-span-6 rounded-lg border border-pinkLight bg-white shadow-md p-3 flex justify-between items-center"
+                className="col-span-12 md:col-span-12 lg:col-span-6 rounded-lg border border-pinkLight bg-white shadow-md p-3 flex justify-between items-center"
               >
                 <div className="flex items-center gap-x-3">
                   <div className="h-11 w-11 rounded-full border border-pinkLight bg-pinkSoft/25 overflow-hidden flex items-center justify-center">
