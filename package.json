@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "deploy": "npm run build && echo. > out/.nojekyll && npx gh-pages -d out --dotfiles"
+    "deploy": "npm run build && echo. > out/.nojekyll && copy public\\CNAME out\\CNAME && npx gh-pages -d out --dotfiles"
+
   },
   "dependencies": {
     "next": "14.2.5",
