@@ -4,7 +4,6 @@ import type { Profile } from "@/types/profile";
 import Badge from "../Badge";
 import ProfileSocial from "./ProfileSocial";
 import { useMemo, useState } from "react";
-import { withBasePath } from "@/lib/basePath";
 
 function getImage(profile: Profile, key: "avatar" | "cover") {
   return profile.ProfileImage?.find((x) => x.name === key)?.image || "";
@@ -39,7 +38,7 @@ export default function ProfileHeader({ data }: Props) {
       {/* cover */}
       <div className="relative h-40 md:h-50 overflow-hidden rounded-b-xl">
         {cover ? (
-          <img src={withBasePath(cover)}  alt="cover" className="h-full w-full object-cover" />
+          <img src={cover}  alt="cover" className="h-full w-full object-cover" />
         ) : (
           <div
             className={`h-full w-full bg-[linear-gradient(135deg,#FCDCEC_0%,#ffffff_45%,#FDD6E1_100%)]`}/>
@@ -63,7 +62,7 @@ export default function ProfileHeader({ data }: Props) {
           <div className="h-40 w-40 overflow-hidden rounded-full border-4 border-white shadow-md flex items-center justify-center bg-pinkSoft">
             {avatar ? (
               <img
-                src={withBasePath(avatar)}
+                src={avatar}
                 alt="avatar"
                 className="h-full w-full object-cover"
               />

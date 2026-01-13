@@ -1,5 +1,3 @@
-import { withBasePath } from "@/lib/basePath";
-
 type Props = {
   urlYoutube?: string;
   urlFacebook?: string;
@@ -45,7 +43,7 @@ export default function ProfileSocial({
             className={ICON_CLASS}
             title="YouTube"
           >
-            <img src={withBasePath("/social/youtube.png")} alt="YouTube" className={IMG_CLASS} />
+            <img src={"/social/youtube.png"} alt="YouTube" className={IMG_CLASS} /> 
           </a>
         )}
 
@@ -57,7 +55,7 @@ export default function ProfileSocial({
             className={ICON_CLASS}
             title="Twitter / X"
           >
-            <img src={withBasePath("/social/twitter.png")} alt="Twitter" className={IMG_CLASS} />
+            <img src={"/social/twitter.png"} alt="Twitter" className={IMG_CLASS} />
           </a>
         )}
 
@@ -70,7 +68,7 @@ export default function ProfileSocial({
             title="Instagram"
           >
             <img
-              src={withBasePath("/social/instagram.png")}
+              src={"/social/instagram.png"}
               alt="Instagram"
               className={IMG_CLASS}
             />
@@ -86,7 +84,7 @@ export default function ProfileSocial({
             title="urlThread"
           >
             <img
-              src={withBasePath("/social/threads.png")}
+              src={"/social/threads.png"}
               alt="Threads"
               className={IMG_CLASS}
             />
@@ -101,7 +99,7 @@ export default function ProfileSocial({
             className={ICON_CLASS}
             title="TikTok"
           >
-            <img src={withBasePath("/social/tiktok.png")} alt="TikTok" className={IMG_CLASS} />
+            <img src={"/social/tiktok.png"} alt="TikTok" className={IMG_CLASS} />
           </a>
         )}
 
@@ -113,7 +111,7 @@ export default function ProfileSocial({
             className={ICON_CLASS}
             title="Facebook"
           >
-            <img src={withBasePath("/social/facebook.png")} alt="Facebook" className={IMG_CLASS} />
+            <img src={"/social/facebook.png"} alt="Facebook" className={IMG_CLASS} />
           </a>
         )}
 

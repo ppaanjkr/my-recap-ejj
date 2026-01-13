@@ -5,7 +5,6 @@ import Image from "next/image";
 import { useSheetEvents } from "@/hooks/useSheetEvents";
 import { CalendarItem } from "@/types/calendar";
 import SocialLinks from "./SocialLinks";
-import { withBasePath } from "@/lib/basePath";
 
 // const prefix = process.env.NODE_ENV === "production" ? "/my-recap-ejj" : "";
 const ARTIST_ICON: Record<string, string> = {
@@ -161,7 +160,7 @@ export default function CalendarPage() {
                   ].join(" ")}
                 >
                   <Image
-                    src={withBasePath(ARTIST_ICON.june)}
+                    src={ARTIST_ICON.june}
                     alt="june"
                     width={16}
                     height={16}
@@ -178,7 +177,7 @@ export default function CalendarPage() {
                   ].join(" ")}
                 >
                   <Image
-                    src={withBasePath(ARTIST_ICON.enjoy)}
+                    src={ARTIST_ICON.enjoy}
                     alt="enjoy"
                     width={16}
                     height={16}
@@ -216,7 +215,7 @@ export default function CalendarPage() {
         ) : mobileDays.length === 0 ? (
           <div className="rounded-xl border border-pinkLight bg-white p-6 text-sm text-blackSoft/80 shadow-soft text-center">
             <Image
-              src={withBasePath("/nodata.png")}
+              src={"/nodata.png"}
               alt="nodata"
               width={200}
               height={200}
@@ -261,7 +260,7 @@ export default function CalendarPage() {
                             .map((a) => (
                               <img
                                 key={a}
-                                src={withBasePath(ARTIST_ICON[a])}
+                                src={ARTIST_ICON[a]}
                                 className="h-7 w-7 rounded-md border border-white bg-white/80"
                               />
                             ))}
@@ -347,7 +346,7 @@ export default function CalendarPage() {
                                 .map((a) => (
                                   <img
                                     key={a}
-                                    src={withBasePath(ARTIST_ICON[a])}
+                                    src={ARTIST_ICON[a]}
                                     className="h-4 w-4 rounded-md border border-white bg-white/80"
                                   />
                                 ))}
