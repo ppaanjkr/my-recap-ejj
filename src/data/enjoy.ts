@@ -14,7 +14,7 @@ export const enjoyData: Profile = {
         likeFood: ["ส้มตำ", "ปิ้งย่าง", "ชาบู"],
         likePet: ["สุนัข"],
         likeHobby: ["ออกกำลังกาย"],
-        likeSport: ["เทนนิส", "แบดมินตัน", "พิคเคิลบอล"],
+        likeSport: ["เทนนิส", "แบดมินตัน", "พาเดล"],
         likeCollectible: ["น้ำหอม"],
         likeArtist: [],
         likeMusic: [],
@@ -44,7 +44,7 @@ export const enjoyData: Profile = {
     ],
     ContactForWork: {
         name: "googolfgolf ",
-        entertainment: ["ConversationThailand","CopyaBangkok"],
+        entertainment: ["ConversationThailand","Copy a Bangkok"],
         instagram: "@googolfgolf",
         mobile: "0818437109",
         line: "@workwithenjoy"
