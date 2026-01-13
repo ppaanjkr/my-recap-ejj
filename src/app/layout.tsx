@@ -9,8 +9,8 @@ const kanit = Kanit({
 });
 
 export const metadata: Metadata = {
-  title: "All for EnjoyJune",
-  description: "All recap of EnjoyJune",
+  title: "My EnjoyJune",
+  description: "All about EnjoyJune",
 };
 
 export default function RootLayout({

@@ -3,6 +3,6 @@ import ProfilePage from "@/components/ProfilePage";
 import { enjoyData } from "@/data/enjoy";
 export default function Page() {
   return (
-    <ProfilePage profile={enjoyData} />
+    <ProfilePage profile={enjoyData} name="enjoy"/>
   );
 }
