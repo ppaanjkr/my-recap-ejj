@@ -6,7 +6,6 @@ import { useSheetEvents } from "@/hooks/useSheetEvents";
 import { CalendarItem } from "@/types/calendar";
 import SocialLinks from "./SocialLinks";
 
-// const prefix = process.env.NODE_ENV === "production" ? "/my-recap-ejj" : "";
 const ARTIST_ICON: Record<string, string> = {
   june: `/artist/june.png`,
   enjoy: `/artist/enjoy.png`,
