@@ -1,5 +1,6 @@
 import type { CalendarItem } from "@/types/calendar";
 import { MusicItem } from "@/types/music";
+import { WorkItem } from "@/types/work";
 
 // const SHEET_TSV_URL = process.env.NEXT_PUBLIC_SHEET_TSV_URL ?? ""; 
 // const SHEET_TSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQvOnidB4yVNl_TOOzjwcW_yu845NxyVM1w5xC_u-4hDvZ9t30q7aqznADzGxy_l2UJx6HLoU9z3_Yu/pub?gid=0&single=true&output=tsv";
@@ -134,5 +135,63 @@ export async function fetchMusicsFromSheetTSV(name: string) {
   const filtered = items
     .filter((item) => matchArtist(item.artist ?? "", name))
     .sort((a, b) => (b.date ?? "").localeCompare(a.date ?? ""));
+  return filtered;
+}
+
+  const statusRank = (s?: number) => {
+    // 0 on-air 
+    // 1 coming soon 
+    // 9 finished 
+    if (s === 0) return 0;
+    if (s === 1) return 1;
+    if (s === 9) return 2;
+    return 3; 
+  };
+export async function fetchWorksFromSheetTSV(name: string) {
+  if (!SHEET_TSV_URL) throw new Error("Missing NEXT_PUBLIC_SHEET_TSV_URL");
+
+  const res = await fetch(SHEETS.works, { cache: "no-store" });
+  if (!res.ok) throw new Error(`Fetch failed: ${res.status}`);
+  const tsv = await res.text();
+  const lines = tsv.split(/\r?\n/).filter((l) => l.trim().length > 0);
+  const header = lines[0].split("\t").map((h) => h.trim());
+  const idx = (name: string) => header.indexOf(name);
+  const dayCounter = new Map<string, number>();
+  const items: WorkItem[] = [];
+
+  for (let i = 1; i < lines.length; i++) {
+    const cols = lines[i].split("\t");
+    const get = (name: string) => {
+      const j = idx(name);
+      return j >= 0 ? (cols[j] ?? "").trim() : "";
+    };
+    const year = get("year");
+    const title = get("title");
+    const count = dayCounter.get(year) ?? 0;
+    if (!year || !title) continue;
+
+    const id = `${year}-${String(count + 1).padStart(2, "0")}`;
+
+    items.push({
+      id,
+      year,
+      title,
+      type: get("type"),
+      desc: get("desc"),
+      poster: get("poster"),
+      artist: get("artist"),
+      character: get("character"),
+      platforms: get("platforms"),
+      status: get("status"),
+    });
+  }
+  const filtered = items
+    .filter((item) => matchArtist(item.artist ?? "", name))
+    .sort((a, b) => {
+      const ra = statusRank(a.status as any);
+      const rb = statusRank(b.status as any);
+      if (ra !== rb) return ra - rb; // ✅ status มาก่อน
+      return (b.year ?? "").localeCompare(a.year ?? ""); // ✅ แล้วค่อยปีใหม่→เก่า
+    });
   return filtered;
 }

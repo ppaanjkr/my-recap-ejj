@@ -25,3 +25,9 @@ export function formatThaiDate(dateString?: string) {
 
   return `${day} ${month} ${year}`;
 }
+
+export function convertToThaiYear(dateString: string) {
+  const date = new Date(dateString);
+  const year = date.getFullYear() + 543;
+  return year.toString();
+}

@@ -4,6 +4,8 @@ import ProfileHeader from "./profile/ProfileHeader";
 import AboutSection from "./profile/AboutSection";
 import MusicSection from "./music/MusicSection";
 import { useSheetMusics } from "@/hooks/useSheetMusics";
+import WorksSection from "./work/WorksSection";
+import { useSheetWorks } from "@/hooks/useSheetWorks";
 
 interface Props {
     name: string,
@@ -15,7 +17,8 @@ const sectionIds = ["about", "works", "awards", "music", "interview", "gallery"]
 export default function ProfilePage({name, profile}: Props) {
     // const [activeSection, setActiveSection] = useState("about");
     // const [selectedWork, setSelectedWork] = useState<Work | null>(null);
-    const { music, loading, error } = useSheetMusics(name);
+    const { music, musicLoading, musicError } = useSheetMusics(name);
+    const { work, workLoading, workError } = useSheetWorks(name);
 
     return (
         <div className="min-h-screen bg-gray/95">
@@ -25,7 +28,7 @@ export default function ProfilePage({name, profile}: Props) {
 
         <main>
           <AboutSection data={profile} />
-          {/* work */}
+          <WorksSection works={work} />
           {/* award */}
           <MusicSection music={music}/>
           {/* interview */}

@@ -6,8 +6,8 @@ import { fetchMusicsFromSheetTSV } from "@/lib/sheetClient";
 
 export function useSheetMusics(name: string) {
   const [music, setMusics] = useState<MusicItem[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string>("");
+  const [musicLoading, setMusicLoading] = useState(true);
+  const [musicError, setMusicError] = useState<string>("");
 
   useEffect(() => {
     let alive = true;
@@ -19,10 +19,10 @@ export function useSheetMusics(name: string) {
         setMusics(data);
       } catch (e: any) {
         if (!alive) return;
-        setError(e?.message ?? "Unknown error");
+        setMusicError(e?.message ?? "Unknown error");
       } finally {
         if (!alive) return;
-        setLoading(false);
+        setMusicLoading(false);
       }
     })();
 
@@ -31,5 +31,5 @@ export function useSheetMusics(name: string) {
     };
   }, []);
 
-  return { music, loading, error };
+  return { music, musicLoading, musicError };
 }
