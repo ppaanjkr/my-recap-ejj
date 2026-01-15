@@ -44,7 +44,7 @@ export const enjoyData: Profile = {
     ],
     ContactForWork: {
         name: "googolfgolf ",
-        entertainment: ["ConversationThailand","Copy a Bangkok"],
+        entertainment: ["ConversationThailand"],
         instagram: "@googolfgolf",
         mobile: "0818437109",
         line: "@workwithenjoy"

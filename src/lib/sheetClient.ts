@@ -138,13 +138,13 @@ export async function fetchMusicsFromSheetTSV(name: string) {
   return filtered;
 }
 
-  const statusRank = (s?: number) => {
+  const statusRank = (s?: string) => {
     // 0 on-air 
     // 1 coming soon 
     // 9 finished 
-    if (s === 0) return 0;
-    if (s === 1) return 1;
-    if (s === 9) return 2;
+    if (s === "1") return 0;
+    if (s === "0") return 1;
+    if (s === "9") return 2;
     return 3; 
   };
 export async function fetchWorksFromSheetTSV(name: string) {
@@ -188,10 +188,10 @@ export async function fetchWorksFromSheetTSV(name: string) {
   const filtered = items
     .filter((item) => matchArtist(item.artist ?? "", name))
     .sort((a, b) => {
-      const ra = statusRank(a.status as any);
-      const rb = statusRank(b.status as any);
-      if (ra !== rb) return ra - rb; // ✅ status มาก่อน
-      return (b.year ?? "").localeCompare(a.year ?? ""); // ✅ แล้วค่อยปีใหม่→เก่า
+      const ra = statusRank(a.status);
+      const rb = statusRank(b.status);
+      if (ra !== rb) return ra - rb; // ✅ status
+      return (b.year ?? "").localeCompare(a.year ?? ""); // ปีใหม่→เก่า
     });
   return filtered;
 }

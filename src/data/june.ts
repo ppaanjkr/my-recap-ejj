@@ -68,7 +68,7 @@ export const juneData: Profile = {
     ],
     ContactForWork: {
         name: "Golf",
-        entertainment: ["ConversationThailand","Copy a Bangkok"],
+        entertainment: ["ConversationThailand"],
         instagram: "@googolfgolf",
         mobile: "0818437109",
     },
