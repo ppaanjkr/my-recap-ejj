@@ -17,7 +17,7 @@ export default function WorksSection({
       <h2 className="flex items-center gap-2 text-sm font-semibold mb-2">
         <span className="text-sm">🎬</span> Works
       </h2>
-      <div className="h-[400px] overflow-y-auto border-gray-50 md:h-auto md:overflow-hidden">
+      <div className="border-gray-50 md:h-auto md:overflow-hidden">
         <div className="grid grid-cols-12 gap-2">
           {works.map((w, i) => (
             <WorkCard
