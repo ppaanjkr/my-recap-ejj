@@ -1,5 +1,6 @@
 import type { CalendarItem } from "@/types/calendar";
 import { MusicItem } from "@/types/music";
+import { VideoItem } from "@/types/video";
 import { WorkItem } from "@/types/work";
 
 // const SHEET_TSV_URL = process.env.NEXT_PUBLIC_SHEET_TSV_URL ?? ""; 
@@ -9,6 +10,7 @@ const SHEETS = {
   events: `${SHEET_TSV_URL}?gid=0&single=true&output=tsv`,
   musics: `${SHEET_TSV_URL}?gid=1443708484&single=true&output=tsv`,
   works: `${SHEET_TSV_URL}?gid=433014224&single=true&output=tsv`,
+  video: `${SHEET_TSV_URL}?gid=698776223&single=true&output=tsv`,
 };
 
 // get id from drive to thumbnail url
@@ -192,6 +194,50 @@ export async function fetchWorksFromSheetTSV(name: string) {
       const rb = statusRank(b.status);
       if (ra !== rb) return ra - rb; // ✅ status
       return (b.year ?? "").localeCompare(a.year ?? ""); // ปีใหม่→เก่า
+    });
+  return filtered;
+}
+
+export async function fetchVideosFromSheetTSV(name: string) {
+  if (!SHEET_TSV_URL) throw new Error("Missing NEXT_PUBLIC_SHEET_TSV_URL");
+
+  const res = await fetch(SHEETS.video, { cache: "no-store" });
+  if (!res.ok) throw new Error(`Fetch failed: ${res.status}`);
+  const tsv = await res.text();
+  const lines = tsv.split(/\r?\n/).filter((l) => l.trim().length > 0);
+  const header = lines[0].split("\t").map((h) => h.trim());
+  const idx = (name: string) => header.indexOf(name);
+  const dayCounter = new Map<string, number>();
+  const items: VideoItem[] = [];
+
+  for (let i = 1; i < lines.length; i++) {
+    const cols = lines[i].split("\t");
+    const get = (name: string) => {
+      const j = idx(name);
+      return j >= 0 ? (cols[j] ?? "").trim() : "";
+    };
+    const date = get("date");
+    const title = get("title");
+    const count = dayCounter.get(date) ?? 0;
+    if (!date || !title) continue;
+
+    const id = `${date}-${String(count + 1).padStart(2, "0")}`;
+
+    items.push({
+      id,
+      date,
+      title,
+      parentTitle: get("parentTitle"),
+      artists: get("artists"),
+      platform: get("platform"),
+      link: get("url"),
+      thumbnail: get("thumbnail")
+    });
+  }
+  const filtered = items
+    .filter((item) => matchArtist(item.artists ?? "", name))
+    .sort((a, b) => {
+      return (b.date ?? "").localeCompare(a.date ?? "");
     });
   return filtered;
 }

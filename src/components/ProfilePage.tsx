@@ -9,9 +9,11 @@ import WorksSection from "./work/WorksSection";
 import MusicSection from "./music/MusicSection";
 import { useSheetMusics } from "@/hooks/useSheetMusics";
 import { useSheetWorks } from "@/hooks/useSheetWorks";
+import { useSheetVideo } from "@/hooks/useSheetVideo";
 import type { SectionId } from "@/types/section";
 import type { Profile } from "@/types/profile";
 import { MusicSkeleton, WorksSkeleton } from "./common/Skeleton";
+import VideoSection from "./video/VideoSection";
 
 interface Props {
   name: string;
@@ -23,6 +25,7 @@ export default function ProfilePage({ name, profile }: Props) {
 
   const { music, musicLoading } = useSheetMusics(name);
   const { work, workLoading } = useSheetWorks(name);
+  const { video, videoLoading } = useSheetVideo(name);
 
   return (
     <div className="min-h-screen bg-gray/95">
@@ -48,9 +51,7 @@ export default function ProfilePage({ name, profile }: Props) {
           )}
 
           {activeSection === "videos" && (
-            <div className="px-4 py-6">
-              <span className="text-sm text-graySoft">Video section</span>
-            </div>
+            videoLoading ? <MusicSkeleton /> : <VideoSection videos={video} />
           )}
         </main>
 
@@ -62,3 +63,7 @@ export default function ProfilePage({ name, profile }: Props) {
     </div>
   );
 }
+function useSheetVideos(name: string): { video: any; workLoading: any; } {
+  throw new Error("Function not implemented.");
+}
+
