@@ -58,7 +58,7 @@ export default function VideoSeriesList({
           <button
             key={s.parentTitle}
             onClick={() => onSelect(s)}
-            className="col-span-12 md:col-span-6 lg:col-span-4 w-full text-left rounded-lg border border-pinkLight bg-white hover:bg-pinkSoft/15 transition p-3 flex gap-3"
+            className="col-span-12 md:col-span-6 w-full text-left rounded-lg border border-pinkLight bg-white hover:bg-pinkSoft/15 transition p-3 flex gap-3"
           >
             {/* thumb */}
             <div className="w-24 h-14 rounded-lg overflow-hidden bg-pinkSoft/30 flex items-center justify-center shrink-0">
