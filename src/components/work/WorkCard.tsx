@@ -19,7 +19,7 @@ export default function WorkCard({
     <button
       type="button"
       onClick={onClick}
-      className="col-span-12 md:col-span-6 lg:col-span-4 w-full text-left rounded-lg border border-pinkLight bg-white shadow-md overflow-hidden hover:-translate-y-0.5 hover:shadow-lg transition"
+      className="col-span-12 md:col-span-6 w-full text-left rounded-lg border border-pinkLight bg-white shadow-md overflow-hidden hover:-translate-y-0.5 hover:shadow-lg transition"
     >
       <div className="grid grid-cols-12 gap-3 p-3">
         {/* Poster */}
