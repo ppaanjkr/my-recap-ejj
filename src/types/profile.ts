@@ -77,5 +77,6 @@ export type OfficialFanclub = {
     thread?: string,
     twitter?: string,
     tiktok?: string,
+    line?: string,
     logo?: string
 }

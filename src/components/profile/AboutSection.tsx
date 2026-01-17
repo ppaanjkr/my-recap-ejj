@@ -216,6 +216,70 @@ export default function AboutSection({ data }: Props) {
           </div>
         </div>
       )}
+      {/* fanclub */}
+      {(data.OfficialFanclub?.length ?? 0) > 0 && (
+        <div className="mt-4">
+          {/* Title */}
+          <h2 className="flex items-center gap-2 text-sm font-semibold mb-1">
+            <span className="text-sm">💗</span> Official Fanclub (TH)
+          </h2>
+
+          <div className="grid grid-cols-12 gap-3 gap-y-2 gap-x-5">
+            {data.OfficialFanclub?.map((f) => (
+              <div
+                key={f.name}
+                className="col-span-12 md:col-span-12 lg:col-span-6 rounded-lg border border-pinkLight bg-white shadow-md p-3 flex justify-between items-center"
+              >
+                <div className="flex items-center gap-x-3">
+                  <div className="h-11 w-11 rounded-full border border-pinkLight bg-pinkSoft/25 overflow-hidden flex items-center justify-center">
+                    {f.logo ? (
+                      <img
+                        src={f.logo}
+                        alt={f.name ?? "fanclub"}
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <span className="text-lg">🤍</span>
+                    )}
+                  </div>
+                  <div className="text-blackSoft gap-y-0">
+                    <div className="font-semibold text-sm">{f.name}</div>
+                    <div>
+                      {f.twitter && (
+                        <a href={`${f.twitter}`}>
+                          <img
+                            src={`/social/twitter.png`}
+                            alt="twitter"
+                            className="w-4 inline-block mr-1"
+                          />
+                        </a>
+                      )}
+                      {f.instagram && (
+                        <a href={`${f.instagram}`}>
+                          <img
+                            src={`/social/instagram.png`}
+                            alt="instagram"
+                            className="w-4 inline-block mr-1"
+                          />
+                        </a>
+                      )}
+                      {f.tiktok && (
+                        <a href={`${f.tiktok}`}>
+                          <img
+                            src={`/social/tiktok.png`}
+                            alt="tiktok"
+                            className="w-5 inline-block mr-1"
+                          />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </section>
   );
 }
