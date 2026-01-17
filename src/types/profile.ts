@@ -16,7 +16,7 @@ export type Profile = {
     ProfileImage?: ProfileImage[],
     Besties?: Bestie[],
     ContactForWork?: ContactForWork,
-    OfficialFanclub?: OfficialFanclub
+    OfficialFanclub?: OfficialFanclub[]
 }
 export type ProfileImage = {
     name?: string,
@@ -76,5 +76,6 @@ export type OfficialFanclub = {
     instagram?: string,
     thread?: string,
     twitter?: string,
-    tiktok?: string
+    tiktok?: string,
+    logo?: string
 }

@@ -48,5 +48,22 @@ export const enjoyData: Profile = {
         instagram: "@googolfgolf",
         mobile: "0818437109",
         line: "@workwithenjoy"
-    }
+    },
+    OfficialFanclub: [{
+        name: "EnjoyLight",
+        instagram: "https://www.instagram.com/enjoyyotdr_ofc",
+        twitter: "https://x.com/Enjoyyotdr_OFC",
+        logo: "/fanclub/enjoy_ofc.png"
+    },{
+        name: "EnjoyJune Home",
+        instagram: "https://www.instagram.com/enjoyjune_home",
+        tiktok: "https://www.tiktok.com/@enjoyjune_home",
+        twitter: "https://x.com/EnjoyjuneHomeTH",
+        logo: "/fanclub/enjoyjune_home.jpg"
+    },{
+        name: "TREND FOR ENJOYJUNE",
+        instagram: "https://www.instagram.com/trendforenjoyjune",
+        twitter: "https://x.com/trend_enjoyjune",
+        logo: "/fanclub/trend_enjoyjune.jpg"
+    }]
 }

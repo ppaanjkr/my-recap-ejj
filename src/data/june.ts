@@ -72,10 +72,22 @@ export const juneData: Profile = {
         instagram: "@googolfgolf",
         mobile: "0818437109",
     },
-    OfficialFanclub: {
+    OfficialFanclub: [{
         name: "JUNE NANNIRIN OFFICIAL",
         instagram: "https://www.instagram.com/junenannirin_th",
         tiktok: "https://www.tiktok.com/@junenannirin_th",
         twitter: "https://x.com/Junenannirin_TH",
-    }
+        logo: "/fanclub/june_ofc.png"
+    },{
+        name: "EnjoyJune Home",
+        instagram: "https://www.instagram.com/enjoyjune_home",
+        tiktok: "https://www.tiktok.com/@enjoyjune_home",
+        twitter: "https://x.com/EnjoyjuneHomeTH",
+        logo: "/fanclub/enjoyjune_home.jpg"
+    },{
+        name: "TREND FOR ENJOYJUNE",
+        instagram: "https://www.instagram.com/trendforenjoyjune",
+        twitter: "https://x.com/trend_enjoyjune",
+        logo: "/fanclub/trend_enjoyjune.jpg"
+    }]
 }
