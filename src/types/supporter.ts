@@ -1,0 +1,16 @@
+export type Supporter = {
+    id?: string,
+    year?: string,
+    artists?: string,
+    brand?: string,
+    image?: string,
+    status?: string,
+    instagram?: string,
+    facebook?: string,
+    twitter?: string,
+    tiktok?: string,
+    youtube?: string,
+    shopee?: string,
+    lazada?: string,
+    website?: string,
+}

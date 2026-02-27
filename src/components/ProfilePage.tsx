@@ -39,7 +39,7 @@ export default function ProfilePage({ name, profile }: Props) {
 
         <main>
           {activeSection === "about" && (
-            <AboutSection data={profile} />
+            <AboutSection data={profile} name={name} />
           )}
 
           {activeSection === "works" && (

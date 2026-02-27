@@ -1,6 +1,7 @@
 import type { CalendarItem } from "@/types/calendar";
 import { MusicItem } from "@/types/music";
 import { ProfileImageFromSheet } from "@/types/profile";
+import { Supporter } from "@/types/supporter";
 import { VideoItem } from "@/types/video";
 import { WorkItem } from "@/types/work";
 
@@ -13,6 +14,7 @@ const SHEETS = {
   works: `${SHEET_TSV_URL}?gid=433014224&single=true&output=tsv`,
   video: `${SHEET_TSV_URL}?gid=698776223&single=true&output=tsv`,
   profileImages: `${SHEET_TSV_URL}?gid=830422845&single=true&output=tsv`,
+  supporters: `${SHEET_TSV_URL}?gid=919058496&single=true&output=tsv`,
 };
 
 // get id from drive to thumbnail url
@@ -241,8 +243,6 @@ export async function fetchVideosFromSheetTSV(name: string) {
     .sort((a, b) => {
       return (b.date ?? "").localeCompare(a.date ?? "");
     });
-
-fetchProfileImagesFromSheetTSV(name);
   return filtered;
 }
 
@@ -274,7 +274,55 @@ export async function fetchProfileImagesFromSheetTSV(name: string) {
       image: get("image"),
     });
   }
+  fetchSupportersFromSheetTSV(name);
   const filtered = items
     .filter((item) => matchArtist(item.artist ?? "", name))
+  return filtered;
+}
+
+export async function fetchSupportersFromSheetTSV(name: string) {
+  if (!SHEET_TSV_URL) throw new Error("Missing NEXT_PUBLIC_SHEET_TSV_URL");
+
+  const res = await fetch(SHEETS.supporters, { cache: "no-store" });
+  if (!res.ok) throw new Error(`Fetch failed: ${res.status}`);
+  const tsv = await res.text();
+  const lines = tsv.split(/\r?\n/).filter((l) => l.trim().length > 0);
+  const header = lines[0].split("\t").map((h) => h.trim());
+  const idx = (name: string) => header.indexOf(name);
+  const items: Supporter[] = [];
+
+  for (let i = 1; i < lines.length; i++) {
+    const cols = lines[i].split("\t");
+    const get = (name: string) => {
+      const j = idx(name);
+      return j >= 0 ? (cols[j] ?? "").trim() : "";
+    };
+    const year = get("year");
+    if (!year) continue;
+
+    const id = `${year}-${get("brand")}`;
+
+    items.push({
+      id,
+      year: year,
+      artists: get("artists"),
+      brand: get("brand"),
+      image: get("image"),
+      status: get("status"),
+      instagram: get("instagram"),
+      facebook: get("facebook"),
+      twitter: get("twitter"),
+      tiktok: get("tiktok"),      
+      youtube: get("youtube"),
+      shopee: get("shopee"),
+      lazada: get("lazada"),
+      website: get("website"),
+    });
+  }
+  const filtered = items
+    .filter((item) => matchArtist(item.artists ?? "", name))
+    .sort((a, b) => {
+      return parseInt(a.status ?? "0") - parseInt(b.status ?? "0");
+    });
   return filtered;
 }

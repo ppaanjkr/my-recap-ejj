@@ -1,18 +1,22 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { Profile } from "@/types/profile";
 import { formatThaiDate } from "@/lib/formatThaiDate";
 import { calculateAge } from "@/lib/calculateAge";
 import AboutSectionItem from "./AboutSectionItem";
 import AboutSectionContact from "./AboutSectionContact";
+import { useSheetSupporters } from "@/hooks/useSheetSupporters";
+import { driveThumb } from "@/lib/workUtils";
 
 type Props = {
   data: Profile;
+  name: string;
 };
 
-export default function AboutSection({ data }: Props) {
+export default function AboutSection({ data, name }: Props) {
   const besties = data.Besties ?? [];
+  const { supporters, supportersLoading } = useSheetSupporters(name);
 
   return (
     <section id="about" className="px-4 md:px-12 pb-6 text-blackSoft">
@@ -268,6 +272,117 @@ export default function AboutSection({ data }: Props) {
                           <img
                             src={`/social/tiktok.png`}
                             alt="tiktok"
+                            className="w-5 inline-block mr-1"
+                          />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+      {/* supporters */}
+      {(supporters?.length ?? 0) > 0 && (
+        <div className="mt-4">
+          {/* Title */}
+          <h2 className="flex items-center gap-2 text-sm font-semibold mb-1">
+            <span className="text-sm">💗</span> ผู้สนับสนุนใจดี
+          </h2>
+
+          <div className="grid grid-cols-12 gap-3 gap-y-2 gap-x-5">
+            {supporters?.map((f) => (
+              <div
+                key={f.id}
+                // className="col-span-12 md:col-span-12 lg:col-span-6 rounded-lg border border-pinkLight bg-white shadow-md p-3 flex justify-between items-center"
+                className={`col-span-12 md:col-span-12 lg:col-span-6 rounded-lg border ${f.status === "0" ? "border-pinkLight" : f.status === "1" ? "border-pinkSoft" : "border-grey"} bg-white shadow-md p-3 flex justify-between items-center`}
+              >
+                <div className="flex items-center gap-x-3">
+                  <div 
+                    className="h-11 w-11 rounded-full border border-pinkLight bg-pinkSoft/25 overflow-hidden flex items-center justify-center">
+                    {f.image ? (
+                      <img
+                        src={driveThumb(f.image)}
+                        alt={f.brand ?? "brand"}
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <span className="text-lg">🤍</span>
+                    )}
+                  </div>
+                  <div className="text-blackSoft gap-y-0">
+                    <div className="font-semibold text-sm">{f.brand}</div>
+                    <div>
+                      {f.instagram && (
+                        <a href={`${f.instagram}`}>
+                          <img
+                            src={`/social/instagram.png`}
+                            alt="instagram"
+                            className="w-4 inline-block mr-1"
+                          />
+                        </a>
+                      )}
+                      {f.facebook && (
+                        <a href={`${f.facebook}`}>
+                          <img
+                            src={`/social/facebook.png`}
+                            alt="facebook"
+                            className="w-4 inline-block mr-1"
+                          />
+                        </a>
+                      )}
+                      {f.twitter && (
+                        <a href={`${f.twitter}`}>
+                          <img
+                            src={`/social/twitter.png`}
+                            alt="twitter"
+                            className="w-4 inline-block mr-1"
+                          />
+                        </a>
+                      )}
+                      {f.tiktok && (
+                        <a href={`${f.tiktok}`}>
+                          <img
+                            src={`/social/tiktok.png`}
+                            alt="tiktok"
+                            className="w-5 inline-block mr-1"
+                          />
+                        </a>
+                      )}
+                      {f.youtube && (
+                        <a href={`${f.youtube}`}>
+                          <img
+                            src={`/social/youtube.png`}
+                            alt="youtube"
+                            className="w-5 inline-block mr-1"
+                          />
+                        </a>
+                      )}
+                      {f.shopee && (
+                        <a href={`${f.shopee}`}>
+                          <img
+                            src={`/social/shopee.png`}
+                            alt="shopee"
+                            className="w-5 inline-block mr-1"
+                          />
+                        </a>
+                      )}
+                      {f.lazada && (
+                        <a href={`${f.lazada}`}>
+                          <img
+                            src={`/social/lazada.png`}
+                            alt="lazada"
+                            className="w-5 inline-block mr-1"
+                          />
+                        </a>
+                      )}
+                      {f.website && (
+                        <a href={`${f.website}`}>
+                          <img
+                            src={`/social/internet.png`}
+                            alt="website"
                             className="w-5 inline-block mr-1"
                           />
                         </a>
