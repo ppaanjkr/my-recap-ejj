@@ -3,7 +3,9 @@
 import type { Profile } from "@/types/profile";
 import Badge from "../Badge";
 import ProfileSocial from "./ProfileSocial";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useSheetProfile } from "@/hooks/useSheetProfile";
+import { driveThumb } from "@/lib/workUtils";
 
 function getImage(profile: Profile, key: "avatar" | "cover") {
   return profile.ProfileImage?.find((x) => x.name === key)?.image || "";
@@ -21,14 +23,23 @@ function fullNameEN(p: Profile) {
 
 type Props = {
   data: Profile;
+  name: string;
 };
 
-export default function ProfileHeader({ data }: Props) {
+export default function ProfileHeader({ data, name }: Props) {
   const cover = getImage(data, "cover");
 
+  const { profileImages, profileLoading } = useSheetProfile(name);
+  useEffect(() => {
+    if (!profileLoading && profileImages.length > 0) {
+      const defaultImg = profileImages[0].image || "";
+      setActiveAvatar(defaultImg);
+    }
+  }, [profileImages, profileLoading]);
+  
   const defaultAvatar = useMemo(
-    () => data.ProfileImage?.[0]?.image || "",
-    [data.ProfileImage]
+    () => profileImages?.[0]?.image || "",
+    [profileImages]
   );
   const [activeAvatar, setActiveAvatar] = useState(defaultAvatar);
   const avatar = activeAvatar;
@@ -62,7 +73,7 @@ export default function ProfileHeader({ data }: Props) {
           <div className="h-40 w-40 overflow-hidden rounded-full border-4 border-white shadow-md flex items-center justify-center bg-pinkSoft">
             {avatar ? (
               <img
-                src={avatar}
+                src={driveThumb(avatar)}
                 alt="avatar"
                 className="h-full w-full object-cover"
               />
@@ -73,12 +84,12 @@ export default function ProfileHeader({ data }: Props) {
         </div>
 
         {/* title group */}
-        {data.ProfileImage?.length ? (
+        {profileImages?.length ? (
           <div className="flex justify-center pt-24 md:pt-3 md:justify-end gap-2 flex-wrap md:pr-6">
-            {data.ProfileImage.map((t) => (
+            {profileImages.map((t) => (
               <Badge
-                key={t.name}
-                title={t.name}
+                key={t.title}
+                title={t.title}
                 active={avatar === (t.image || "")}
                 onClick={() => setActiveAvatar(t.image || "")}
               />

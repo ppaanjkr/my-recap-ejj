@@ -1,5 +1,6 @@
 import type { CalendarItem } from "@/types/calendar";
 import { MusicItem } from "@/types/music";
+import { ProfileImageFromSheet } from "@/types/profile";
 import { VideoItem } from "@/types/video";
 import { WorkItem } from "@/types/work";
 
@@ -11,6 +12,7 @@ const SHEETS = {
   musics: `${SHEET_TSV_URL}?gid=1443708484&single=true&output=tsv`,
   works: `${SHEET_TSV_URL}?gid=433014224&single=true&output=tsv`,
   video: `${SHEET_TSV_URL}?gid=698776223&single=true&output=tsv`,
+  profileImages: `${SHEET_TSV_URL}?gid=830422845&single=true&output=tsv`,
 };
 
 // get id from drive to thumbnail url
@@ -239,5 +241,40 @@ export async function fetchVideosFromSheetTSV(name: string) {
     .sort((a, b) => {
       return (b.date ?? "").localeCompare(a.date ?? "");
     });
+
+fetchProfileImagesFromSheetTSV(name);
+  return filtered;
+}
+
+export async function fetchProfileImagesFromSheetTSV(name: string) {
+  if (!SHEET_TSV_URL) throw new Error("Missing NEXT_PUBLIC_SHEET_TSV_URL");
+
+  const res = await fetch(SHEETS.profileImages, { cache: "no-store" });
+  if (!res.ok) throw new Error(`Fetch failed: ${res.status}`);
+  const tsv = await res.text();
+  const lines = tsv.split(/\r?\n/).filter((l) => l.trim().length > 0);
+  const header = lines[0].split("\t").map((h) => h.trim());
+  const idx = (name: string) => header.indexOf(name);
+  const items: ProfileImageFromSheet[] = [];
+
+  for (let i = 1; i < lines.length; i++) {
+    const cols = lines[i].split("\t");
+    const get = (name: string) => {
+      const j = idx(name);
+      return j >= 0 ? (cols[j] ?? "").trim() : "";
+    };
+    const title = get("title");
+    if (!title) continue;
+
+    const id = `${title}`;
+
+    items.push({
+      artist: get("artist"),
+      title,
+      image: get("image"),
+    });
+  }
+  const filtered = items
+    .filter((item) => matchArtist(item.artist ?? "", name))
   return filtered;
 }

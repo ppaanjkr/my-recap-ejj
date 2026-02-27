@@ -30,7 +30,7 @@ export default function ProfilePage({ name, profile }: Props) {
   return (
     <div className="min-h-screen bg-gray/95">
       <div className="mx-auto max-w-2xl md:max-w-full lg:max-w-[70%] bg-white min-h-screen shadow-soft pb-16 md:pb-0">
-        <ProfileHeader data={profile} />
+        <ProfileHeader data={profile} name={name} />
 
         <DesktopNav
           activeSection={activeSection}

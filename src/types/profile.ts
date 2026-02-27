@@ -80,3 +80,9 @@ export type OfficialFanclub = {
     line?: string,
     logo?: string
 }
+
+export type ProfileImageFromSheet = {
+    artist?: string,
+    title?: string,
+    image?: string
+}
