@@ -62,8 +62,15 @@ export const juneData: Profile = {
             index: 1,
             relationship : "ลูกชาย",
             name: "ดอลล่าห์ (Babi Billion Dollar)",
-            instagram: "https://www.instagram.com/babi_billiondollar",
+            instagram: "https://www.instagram.com/babidollar_babidarling",
             Image: "/june/besties__1.jpg"
+        },
+        {
+            index: 2,
+            relationship : "ลูกสาว",
+            name: "ดาร์ลิ้ง (Babi Darling)",
+            instagram: "https://www.instagram.com/babidollar_babidarling",
+            Image: "/june/besties__2.jpg"
         }
     ],
     ContactForWork: {
